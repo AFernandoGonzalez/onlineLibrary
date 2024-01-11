@@ -1,11 +1,14 @@
+require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bookRoutes = require('./src/routes/bookRoutes');
+const { connection } = require('./src/db/db');
 const app = express();
-const PORT = process.env.PORT || 8000;
 
+
+const PORT = process.env.PORT || 8000;
+connection;
 // Enable CORS
 app.use(cors());
 
@@ -13,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('My Library API ');
 });
 
 app.use('/api', bookRoutes);
