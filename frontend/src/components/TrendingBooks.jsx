@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BookListResults from './BookListResults';
+import Loading from './Loading';
 
 const TrendingBooks = () => {
     const [trendingBooks, setTrendingBooks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchTrendingBooks = async () => {
@@ -14,6 +16,8 @@ const TrendingBooks = () => {
                 setTrendingBooks(response.data.works);
             } catch (error) {
                 console.error('Error fetching trending books:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -23,7 +27,10 @@ const TrendingBooks = () => {
     return (
         <div>
             <h2>Trending Books</h2>
-            <BookListResults books={trendingBooks} />
+            {loading ?
+                <Loading /> :
+                <BookListResults books={trendingBooks} />
+            }
         </div>
     );
 };
